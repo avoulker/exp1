@@ -1,56 +1,66 @@
-name_user = input("Привіт, я твій бот помічник, ми зіграємо в гру <Питання-відповідь> як до тебе звертатися? ")
-print (f"Приємно чути {name_user}")
-print ("Також хотів сказати тобі що гра має 7 запитань, і якщо ти даш не вірну відповідь хочаб на одне запитання то ти програєш!")
+import tkinter as tk
 
-while True:
-    start_game = input("Ну що почнімо?(Так або Ні...) ")
-    if start_game == ("Так"):
-        print("Тоді поїхали!")
-        answer_1 = input("Скільки материків на землі? ")
-        if answer_1 == ("6"):
-            print("Молодець!")
-        else:
-            print("Невірно, ти програв😕")
-            break
-        answer_2 = input("Яка столиця України? ")
-        if answer_2 == ("Київ"):
-            print("Так тримати!")
-        else:
-            print("Невірно, ти програв😕")
-            break
-        answer_3 = input("Яка найбільша планета в Сонячній системі? ")
-        if answer_3 == ("Юпітер"):
-            print("Добре!")
-        else:
-            print("Невірно, ти програв😕")
-            break
-        answer_4 = input("Скільки днів у тижні? ")
-        if answer_4 == ("7"):
-            print("Ти розумник!")
-        else:
-            print("Невірно, ти програв😕")
-            break
-        answer_5 = input("Скільки літер в українському алфавіті ")
-        if answer_5 == ("33"):
-            print("Добре!")
-        else:
-            print("Невірно, ти програв😕")
-            break
-        answer_6 = input("В якому році почалась друга світова війна? ")
-        if answer_6 == ("1939"):
-            print("Ти розумник!")
-        else:
-            print("Невірно, ти програв😕")
-            break
-        answer_7 = input("Ну і нарешті кінцеве питання, скільки пальців на правій руці у людини? ")
-        if answer_7 == ("5"):
-            print("Молодець, ти дав відповідь на всі запитання. Ти виграв😎")
-            break
-        else:
-            print("Невірно, ти програв😕")
-            break
+def on_button_click(button):
+    pass
+def set_theme(theme):
+    if theme == "light":
+        root.config (bg ="lightgray")
+        display.config (bg = "lightgray", fg = "black")
+    elif theme == "dark":
+        root.config(bg = "black")
+        display.config(bg= "gray", fg= "black")
+    elif theme == "skyblue":
+        root.config(bg = "skyblue")
+        display.config(bg = "skyblue", fg = "white")
+    elif theme == "deep pink":
+        root.config(bg = "deep pink")
+        display.config(bg = "deep pink", fg = "white")
+    elif theme == "aqua":
+        root.config(bg="aquamarine")
+        display.config(bg="aquamarine", fg="black")
+    for button in buttons:
+        button.config(bg = "lightgray" if theme == "light" else "darkgray" if theme == "dark" else "lightblue" if theme == "skyblue" else "darkgray" if theme == "pink" else "white" if theme == "aqua" else "white", fg = "black")
 
-    elif start_game == ("Ні"):
-        print("Я чекатиму тебе! До зустрічі!")
-        break
-    else: print("Мабуть ти некоректно увів свою відповідь, будь ласка уведи її заново")
+root = tk.Tk()
+root.title("Калькулятор")
+root.geometry("385x400")
+
+display = tk.Entry(root, font = ("Arial", 24), justify = "right")
+display.grid(row = 0, column = 0, columnspan = 4, padx = 10, pady = 10)
+
+buttons = []
+button_texts = [
+
+'7', '8', '9', '/',
+'4', '5', '6', '*',
+'1', '2', '3', '-',
+'C', '0', '=', '+'
+
+]
+
+row_val = 1
+col_val = 0
+
+for text in button_texts:
+    button = tk.Button(root, text = text, font = ("Arial", 18), width = 5, height = 2,
+    command = lambda text = text: on_button_click(text))
+    button.grid(row = row_val, column = col_val)
+    buttons.append(button)
+
+    col_val += 1
+    if col_val > 3:
+        col_val = 0
+        row_val += 1
+
+menubar = tk.Menu(root)
+theme_menu = tk.Menu(menubar, tearoff = 0)
+theme_menu.add_command(label = "Світла тема", command = lambda: set_theme("light"))
+theme_menu.add_command(label = "Темна тема", command = lambda: set_theme("dark"))
+theme_menu.add_command(label = "Небесно синя тема", command = lambda: set_theme("skyblue"))
+theme_menu.add_command(label = "Розова тема", command = lambda: set_theme("deep pink"))
+theme_menu.add_command(label = "Аквамаринова тема", command = lambda: set_theme("aqua"))
+menubar.add_cascade(label = "Змінити тему", menu=theme_menu)
+
+root.config(menu = menubar)
+set_theme("light")
+root.mainloop()
