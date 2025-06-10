@@ -1,7 +1,41 @@
 import tkinter as tk
+import math
 
 def on_button_click(button):
-    pass
+    if button == "C":
+        display.delete(0, tk.END)
+    elif button == "=":
+        try:
+            result = eval(display.get())
+            display.delete(0, tk.END)
+            display.insert(tk.END, str(result))
+        except:
+            error()
+    elif button == "√":
+        try:
+            value = float(display.get())
+            result = math.sqrt(value)
+            display.delete(0, tk.END)
+            display.insert(tk.END, str(result))
+        except:
+            error()
+    elif button == "%":
+        try:
+            value = float(display.get())
+            result = value / 100
+            display.delete(0, tk.END)
+            display.insert(tk.END, str(result))
+        except:
+            error()
+    else:
+        display.insert(tk.END, button)
+
+def error():
+    display.delete(0, tk.END)
+    display.insert(tk.END, "Помилка")
+    root.after(2, lambda: display.delete(0, tk.END))
+
+
 def set_theme(theme):
     if theme == "light":
         root.config (bg ="lightgray")
@@ -23,7 +57,7 @@ def set_theme(theme):
 
 root = tk.Tk()
 root.title("Калькулятор")
-root.geometry("385x400")
+root.geometry("385x450")
 
 display = tk.Entry(root, font = ("Arial", 24), justify = "right")
 display.grid(row = 0, column = 0, columnspan = 4, padx = 10, pady = 10)
@@ -34,7 +68,8 @@ button_texts = [
 '7', '8', '9', '/',
 '4', '5', '6', '*',
 '1', '2', '3', '-',
-'C', '0', '=', '+'
+'C', '0', '=', '+',
+'.', '%', '√',
 
 ]
 
