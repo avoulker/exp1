@@ -33,7 +33,7 @@ def on_button_click(button):
 def error():
     display.delete(0, tk.END)
     display.insert(tk.END, "Помилка")
-    root.after(2, lambda: display.delete(0, tk.END))
+    root.after(2000, lambda: display.delete(0, tk.END))
 
 
 def set_theme(theme):
